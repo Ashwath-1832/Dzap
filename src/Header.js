@@ -1,20 +1,22 @@
 import React from "react";
 import logo from "./assets/logo.svg";
-import { Link } from "react-router-dom";
+import ethLogo from "./assets/EthLogo.svg";
 
 function Header() {
   return (
-    <Header>
+    <header>
       <div className="leftH">
         <img src={logo} alt="Logo" className="logo" />
-        <Link to="/" className="link">
-          <div className="headerItem">Swap</div>
-        </Link>
+
+        <div className="headerItem">Swap</div>
       </div>
       <div className="rightH">
+        <div className="headerItem">
+          <img src={ethLogo} alt="Ethereum" className="eth" /> Ethereum
+        </div>
         <div className="connectButton">Connect</div>
       </div>
-    </Header>
+    </header>
   );
 }
 
