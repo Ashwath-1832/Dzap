@@ -1,20 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input, Popover, Radio, Modal, message } from "antd";
 import {
-  ArrowDownOutlined,
   DownOutlined,
   SettingOutlined,
   SyncOutlined,
+  WalletOutlined,
 } from "@ant-design/icons";
+import axios from "axios";
 import tokenList from "./tokenList.json";
+import { useSendTransaction, useWaitForTransaction } from "wagmi";
 
-function Swap() {
+function Swap(props) {
+  const { connect, address, isConnected } = props;
   const [tokenOneAmount, setTokenOneAmount] = useState(null);
   const [tokenTwoAmount, setTokenTwoAmount] = useState(null);
   const [tokenOne, setTokenOne] = useState(tokenList[0]);
   const [tokenTwo, setTokenTwo] = useState(tokenList[1]);
   const [isOpen, setIsOpen] = useState(false);
   const [changeToken, setChangeToken] = useState(1);
+  const [prices, setPrices] = useState(null);
+  const apiKey = "jm7lkQTOyqAHdBDyztF67BwtGIY039M8";
+
+  const [txDetails, setTxDetails] = useState({
+    to: null,
+    data: null,
+    value: null,
+  });
+
+  const { data, sendTransaction } = useSendTransaction({
+    request: {
+      from: address,
+      to: String(txDetails.to),
+      data: String(txDetails.data),
+      value: String(txDetails.value),
+    },
+  });
 
   function changeAmount(e) {
     setTokenOneAmount(e.target.value);
@@ -40,6 +60,56 @@ function Swap() {
     }
     setIsOpen(false);
   }
+  //   async function fetchPrices(one, two) {
+  //     // try {
+  //     //   const response = await axios.get(
+  //     //     `https://api.1inch.dev/v3.0/quote?src=${tokenOne.address}&dst=${tokenTwo.address}&amount=${tokenOneAmount}`,
+  //     //     {
+  //     //       headers: {
+  //     //         "Content-Type": "application/json",
+  //     //         Authorization: "Bearer jm7lkQTOyqAHdBDyztF67BwtGIY039M8",
+  //     //         "Access-Control-Allow-Origin": "*",
+  //     //       },
+  //     //     }
+  //     //   );
+
+  //     //   console.log(response.data);
+  //     //   // Assuming setPrices is a function to update state
+  //     //   setPrices(response.data);
+  //     // } catch (error) {
+  //     //   console.error("Error fetching prices:", error);
+  //     // }
+  //   }
+  async function fetchPrices(one, two) {
+    try {
+      const apiUrl = `https://api.1inch.dev/v3.0/quote?src=${
+        tokenOne.address
+      }&dst=${tokenTwo.address}&amount=${100000}`;
+
+      const response = await fetch(apiUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+
+        setPrices(data);
+      } else {
+        console.error("Error fetching prices:", response.status);
+      }
+    } catch (error) {
+      console.error("Error fetching prices:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchPrices(tokenList[0].address, tokenList[1].address);
+  }, []);
 
   return (
     <>
@@ -93,8 +163,19 @@ function Swap() {
             </div>
           </div>
         </div>
-        <div className="swapButton" disabled={!tokenOneAmount}>
+        <div className="swapButton" disabled={!tokenOneAmount || !isConnected}>
           Swap
+        </div>
+        <div className="connectButtonDown" onClick={connect}>
+          {isConnected ? (
+            <>
+              <WalletOutlined /> Connected
+            </>
+          ) : (
+            <>
+              <WalletOutlined /> Connect Wallet
+            </>
+          )}
         </div>
       </div>
     </>
