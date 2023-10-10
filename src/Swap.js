@@ -5,10 +5,13 @@ import {
   SettingOutlined,
   SyncOutlined,
   WalletOutlined,
+  ReloadOutlined,
+  PlusOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
 import tokenList from "./tokenList.json";
 import { useSendTransaction, useWaitForTransaction } from "wagmi";
+import MetaMask from "./assets/MetaMask.svg";
 
 function Swap(props) {
   const { connect, address, isConnected } = props;
@@ -139,28 +142,34 @@ function Swap(props) {
       </Modal>
       <div className="tradeBox">
         <div className="tradeBoxHeading">
-          <h4>Swap</h4>
-          <SettingOutlined className="cog" />
-          <div className="inputs">
-            <Input
-              placeholder="0"
-              value={tokenOneAmount}
-              onChange={changeAmount}
-            />
-            <Input placeholder="0" value={tokenTwoAmount} disabled={true} />
-            <div className="switchButton" onClick={switchTokens}>
-              <SyncOutlined className="switchArrow" />
-            </div>
-            <div className="assetOne" onClick={() => openModal(1)}>
-              <img src={tokenOne.img} alt="Asset Image" className="assetLogo" />
-              {tokenOne.ticker}
-              <DownOutlined />
-            </div>
-            <div className="assetTwo" onClick={() => openModal(2)}>
-              <img src={tokenTwo.img} alt="Asset Image" className="assetLogo" />
-              {tokenTwo.ticker}
-              <DownOutlined />
-            </div>
+          <div>
+            <h3>Swap</h3>
+          </div>
+          <div className="swapIcons">
+            <ReloadOutlined />
+            <PlusOutlined />
+            <SettingOutlined />
+          </div>
+        </div>
+        <div className="inputs">
+          <Input
+            placeholder="0"
+            value={tokenOneAmount}
+            onChange={changeAmount}
+          />
+          <Input placeholder="0" value={tokenTwoAmount} disabled={true} />
+          <div className="switchButton" onClick={switchTokens}>
+            <SyncOutlined className="switchArrow" />
+          </div>
+          <div className="assetOne" onClick={() => openModal(1)}>
+            <img src={tokenOne.img} alt="Asset Image" className="assetLogo" />
+            {tokenOne.ticker}
+            <DownOutlined />
+          </div>
+          <div className="assetTwo" onClick={() => openModal(2)}>
+            <img src={tokenTwo.img} alt="Asset Image" className="assetLogo" />
+            {tokenTwo.ticker}
+            <DownOutlined />
           </div>
         </div>
         <div className="swapButton" disabled={!tokenOneAmount || !isConnected}>
@@ -169,7 +178,8 @@ function Swap(props) {
         <div className="connectButtonDown" onClick={connect}>
           {isConnected ? (
             <>
-              <WalletOutlined /> Connected
+              <img src={MetaMask} alt="MetaMask" className="bottomIcon" />{" "}
+              Connected
             </>
           ) : (
             <>

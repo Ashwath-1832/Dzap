@@ -9,10 +9,13 @@ body {
   width: 100vw;
   background-color: rgb(25, 33, 52) !important;
   background: rgb(25, 33, 52);
-  background: linear-gradient(
-    180deg,
-    rgba(25, 33, 52, 1) 28%,
-    rgba(7, 8, 21, 1) 75%
+  background-image: linear-gradient(
+    to right bottom,
+    #00071a,
+    #00111e,
+    #000000,
+    #000000e3,
+    #001e12a8
   );
   color: white;
 }
@@ -23,7 +26,7 @@ code {
 }
 
 .ant-input {
-  background-color: #1f2639 !important;
+  background: linear-gradient(38.28deg, #2f2f6066 6.51%, #0170752e 88.45%);
   color: white !important;
   border-width: 0px !important;
   height: 96px !important;

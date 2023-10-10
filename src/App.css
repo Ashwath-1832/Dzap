@@ -9,18 +9,19 @@
   align-items: center;
   padding-left: 50px;
   padding-right: 50px;
+  border-bottom: 2px solid #3a415769;
 }
 
 .logo {
-  width: 40px;
+  width: 85px;
   height: 40px;
   padding-right: 20px;
 }
 
-.eth {
-  width: 20px;
-  height: 20px;
-  padding-right: 10px;
+.headerIcons {
+  width: 25px;
+  height: 25px;
+  padding-right: 8px;
 }
 
 .leftH {
@@ -40,32 +41,36 @@
   padding: 10px;
   padding-left: 15px;
   padding-right: 15px;
-  border-radius: 5px;
-  font-weight: 500;
+  border-radius: 100px;
   transition: 0.3s;
+  font-weight: bold;
   display: flex;
+  color: #dbe5ff;
   align-items: center;
+  background: linear-gradient(37.28deg, #2f2f607a 6.51%, #01707554 88.45%);
 }
 
 .headerItem:hover {
-  background-color: rgb(34, 42, 58);
+  background-color: rgba(139, 151, 174, 0.555);
   cursor: pointer;
 }
 
 .connectButton {
-  background-color: #243056;
-  padding: 10px;
+  display: flex;
+  background: linear-gradient(37.28deg, #2f2f607a 6.51%, #01707554 88.45%);
+  padding: 13px;
+  gap: 6px;
   padding-right: 20px;
   padding-left: 20px;
   border-radius: 100px;
-  color: #5981f3;
+  color: #dbe5ff;
   font-weight: bold;
   transition: 0.3s;
 }
 
 .connectButton:hover {
   cursor: pointer;
-  color: #3b4874;
+  background-color: rgba(139, 151, 174, 0.432);
 }
 
 .mainWindow {
@@ -81,8 +86,8 @@
 
 .tradeBox {
   width: 400px;
-  background-color: #0e111b;
-  border: 2px solid #21273a;
+  background: linear-gradient(123.28deg, #2f2f6012 6.51%, #0b35331f 88.45%);
+  border: 3px solid #2122333d;
   min-height: 300px;
   border-radius: 15px;
   display: flex;
@@ -91,24 +96,18 @@
   align-items: flex-start;
   padding-left: 30px;
   padding-right: 30px;
+  margin-top: 70px;
 }
 
-.tradeBoxHeader {
+.tradeBoxHeading {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 98%;
 }
-
-.cog {
-  color: #51586f;
-  transition: 0.3s;
-}
-
-.cog:hover {
-  color: white;
-  rotate: 90deg;
-  cursor: pointer;
+.swapIcons {
+  display: flex;
+  gap: 20px;
 }
 
 .switchButton {
@@ -143,13 +142,14 @@
 
 .inputs {
   position: relative;
+  margin-top: 3px;
 }
 
 .assetOne {
   position: absolute;
   min-width: 50px;
   height: 30px;
-  background-color: #3a4157;
+
   top: 36px;
   right: 20px;
   border-radius: 100px;
@@ -166,7 +166,6 @@
   position: absolute;
   min-width: 50px;
   height: 30px;
-  background-color: #3a4157;
   top: 135px;
   right: 20px;
   border-radius: 100px;
@@ -196,46 +195,47 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #243056;
+  background: linear-gradient(38.28deg, #2f2f6066 6.51%, #0170752e 88.45%);
   width: calc(100%);
   height: 55px;
   font-size: 20px;
   border-radius: 12px;
-  color: #5981f3;
+  color: #dbe5ff;
   font-weight: bold;
-  transition: 0.3s;
-  margin-bottom: 30px;
-  margin-top: 8px;
+  margin-bottom: 15px;
+  margin-top: 10px;
 }
 .connectButtonDown {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #243056;
+  border: 2px solid #35456f52;
   width: calc(100%);
   height: 55px;
   font-size: 20px;
   border-radius: 12px;
-  color: #5981f3;
+  color: #dbe5ff;
   font-weight: bold;
-  transition: 0.3s;
+  gap: 5px;
   margin-bottom: 30px;
-  margin-top: 8px;
 }
 .connectButtonDown:hover {
   cursor: pointer;
-  color: #3b4874;
+  background-color: #63636345;
+}
+.bottomIcon {
+  width: 32px;
+  display: flex;
 }
 
 .swapButton[disabled] {
-  background-color: #243056;
+  background: linear-gradient(38.28deg, #2f2f6066 6.51%, #0170752e 88.45%);
   opacity: 0.4;
-  color: #5982f39b;
+  color: #86a7ffc2;
 }
 
 .swapButton[disabled]:hover {
   cursor: not-allowed;
-  background-color: #243056;
 }
 
 .swapButton:hover {
