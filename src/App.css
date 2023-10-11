@@ -18,10 +18,25 @@
   padding-right: 20px;
 }
 
+.networkSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 110px;
+  font-size: 16px;
+  color: #dbe5ff;
+  font-weight: bold;
+}
 .headerIcons {
   width: 25px;
   height: 25px;
   padding-right: 8px;
+}
+
+.iconButton {
+  padding: 0px;
+  background: none;
+  border: none;
 }
 
 .leftH {
@@ -38,7 +53,7 @@
 }
 
 .headerItem {
-  padding: 10px;
+  padding: 8px;
   padding-left: 15px;
   padding-right: 15px;
   border-radius: 100px;
@@ -54,11 +69,22 @@
   background-color: rgba(139, 151, 174, 0.555);
   cursor: pointer;
 }
-
+.gasSection {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  color: #586084f7;
+  font-weight: bold;
+  font-size: 18px;
+  gap: 5px;
+  align-items: end;
+}
 .connectButton {
   display: flex;
   background: linear-gradient(37.28deg, #2f2f607a 6.51%, #01707554 88.45%);
-  padding: 13px;
+  padding: 11px;
   gap: 6px;
   padding-right: 20px;
   padding-left: 20px;
@@ -111,18 +137,18 @@
 }
 
 .switchButton {
-  background-color: #3a4157;
-  width: 25px;
-  height: 25px;
+  background-color: #0e1426;
+  width: 30px;
+  height: 30px;
   align-items: center;
   justify-content: center;
   display: flex;
   border-radius: 8px;
   position: absolute;
-  top: 86px;
+  top: 81px;
   left: 180px;
   color: #5f6783;
-  border: 3px solid #0e111b;
+  border: 3px solid #090a0f;
   font-size: 12px;
   transition: 0.3s;
 }
@@ -191,7 +217,7 @@
   margin-left: 5px;
 }
 
-.swapButton {
+.quoteButton {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -228,19 +254,19 @@
   display: flex;
 }
 
-.swapButton[disabled] {
+.quoteButton[disabled] {
   background: linear-gradient(38.28deg, #2f2f6066 6.51%, #0170752e 88.45%);
   opacity: 0.4;
   color: #86a7ffc2;
 }
 
-.swapButton[disabled]:hover {
+.quoteButton[disabled]:hover {
   cursor: not-allowed;
 }
 
-.swapButton:hover {
+.quoteButton:hover {
   cursor: pointer;
-  background-color: #3b4874;
+  background-color: #0025676b;
 }
 
 .tokenLogo {
@@ -250,7 +276,6 @@
 
 .modalContent {
   border-top: 1px solid #363e54;
-  /* padding-top: 20px; */
   margin-top: 20px;
   display: flex;
   flex-direction: column;
