@@ -82,7 +82,7 @@
     "ticker": "MATIC",
     "img": "https://cdn.moralis.io/eth/0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0.png",
     "name": "Matic Token",
-    "address": "0xC866eeB6CC852a83b43379e239De09500F20Cef1",
+    "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
     "decimals": 18
   }
 ]
