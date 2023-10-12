@@ -8,23 +8,17 @@ import { configureChains, useSwitchNetwork } from "wagmi";
 import { mainnet, optimism, polygon } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 import { WalletOutlined } from "@ant-design/icons";
-import { useState } from "react";
 import { Button, Dropdown } from "antd";
 
 function Header(props) {
   const { connect, isConnected, address, setSelectedChain, selectedChain } =
     props;
-  const [showDropdown, setShowDropdown] = useState(false);
   const { switchNetwork } = useSwitchNetwork();
 
   const { chains: chainCofig } = configureChains(
     [mainnet, optimism, polygon],
     [publicProvider()]
   );
-
-  const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
-  };
 
   const chainitems = chainCofig.map((item, index) => ({
     key: index,
@@ -47,7 +41,7 @@ function Header(props) {
         return (
           <>
             <div className="networkSection">
-              <img src={EthLogo} alt="logo" className="headerIcons" />{" "}
+              <img src={EthLogo} alt="logo" className="headerIcons" />
               <span>Ethereum</span>
             </div>
           </>
@@ -72,7 +66,7 @@ function Header(props) {
         );
 
       default:
-        return <span className="headerIcons">Network</span>;
+        return <span className="defaultNetwork">Select Network</span>;
     }
   };
 

@@ -32,7 +32,14 @@
   height: 25px;
   padding-right: 8px;
 }
-
+.defaultNetwork {
+  color: #dbe5ff;
+  font-weight: bold;
+  padding: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .iconButton {
   padding: 0px;
   background: none;
@@ -105,11 +112,6 @@
   justify-content: center;
 }
 
-.link {
-  text-decoration: none;
-  color: white;
-}
-
 .tradeBox {
   width: 400px;
   background: linear-gradient(123.28deg, #2f2f6012 6.51%, #0b35331f 88.45%);
@@ -151,14 +153,6 @@
   border: 3px solid #090a0f;
   font-size: 12px;
   transition: 0.3s;
-}
-
-.dollarAmount {
-  position: absolute;
-  top: 75px;
-  left: 14px;
-  font-size: 10px;
-  color: #5f6783;
 }
 
 .switchButton:hover {
@@ -307,4 +301,39 @@
   font-size: 13px;
   font-weight: 300;
   color: #51596f;
+}
+
+@media (max-width: 500px) {
+  .header {
+    padding-left: 12px;
+    padding-right: 0px;
+    justify-content: space-evenly;
+  }
+}
+
+@media (max-width: 500px) {
+  .rightH {
+    gap: 8px;
+  }
+}
+@media (max-width: 500px) {
+  .connectButton {
+    padding: 12px;
+  }
+}
+@media (max-width: 500px) {
+  .headerItem {
+    padding: 8px;
+  }
+}
+@media (max-width: 500px) {
+  .tradeBox {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+@media (max-width: 500px) {
+  .switchButton {
+    left: 43%;
+  }
 }

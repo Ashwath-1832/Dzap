@@ -7,6 +7,7 @@ import {
   WalletOutlined,
   ReloadOutlined,
   PlusOutlined,
+  SwapOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
 import tokenList from "./tokenList.json";
@@ -20,7 +21,6 @@ function Swap(props) {
   const [tokenTwo, setTokenTwo] = useState(tokenList[1]);
   const [isOpen, setIsOpen] = useState(false);
   const [changeToken, setChangeToken] = useState(1);
-  const apiKey = "jm7lkQTOyqAHdBDyztF67BwtGIY039M8";
 
   function changeAmount(e) {
     setTokenOneAmount(e.target.value);
@@ -47,8 +47,8 @@ function Swap(props) {
     setIsOpen(false);
   }
 
-  async function fetchPrices(tokenOne, tokenTwo, tokenOneAmount) {
-    const parseAmount = Number(tokenOneAmount);
+  async function fetchPrices() {
+    const parseAmount = Number(tokenOneAmount * 10 ** tokenOne.decimals);
 
     try {
       const apiUrl = `https://api-dzap.1inch.io/v5.2/137/quote?src=${tokenOne.address}&dst=${tokenTwo.address}&amount=${parseAmount}`;
@@ -59,10 +59,10 @@ function Swap(props) {
         },
       });
 
-      if (response.status === 0) {
+      if (response.status === 200) {
         const data = response.data;
-        console.log(data);
-        setTokenTwoAmount(data);
+        const quote = data.toAmount / 10 ** tokenTwo.decimals;
+        setTokenTwoAmount(quote.toFixed(6));
       } else {
         console.error("Error fetching prices:", response.status);
       }
@@ -70,6 +70,13 @@ function Swap(props) {
       console.error("Error fetching prices:", error);
     }
   }
+
+  useEffect(() => {
+    if (tokenOneAmount == 0 || tokenOneAmount === undefined) {
+      setTokenTwoAmount(0);
+    }
+  }, [tokenOneAmount]);
+
   return (
     <>
       <Modal
@@ -134,13 +141,20 @@ function Swap(props) {
             <DownOutlined />
           </div>
         </div>
-        <div className="quoteButton" disabled={!tokenOneAmount || !isConnected}>
+        <div className="gasSection">
+          Estimated gas fee <SwapOutlined />
+        </div>
+        <div
+          className="quoteButton"
+          disabled={!tokenOneAmount || !isConnected}
+          onClick={() => fetchPrices()}
+        >
           Get Quote
         </div>
         <div className="connectButtonDown" onClick={connect}>
           {isConnected ? (
             <>
-              <img src={MetaMask} alt="MetaMask" className="bottomIcon" />{" "}
+              <img src={MetaMask} alt="MetaMask" className="bottomIcon" />
               Connected
             </>
           ) : (
