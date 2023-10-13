@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Input, Modal } from "antd";
+import { Input, Modal, Spin } from "antd";
 import {
   DownOutlined,
   SettingOutlined,
@@ -12,16 +12,26 @@ import {
 import axios from "axios";
 import tokenList from "./tokenList.json";
 import MetaMask from "./assets/MetaMask.svg";
+import { useSendTransaction } from "wagmi";
 
 function Swap(props) {
   const { connect, address, isConnected } = props;
+  const [slippage, setSlippage] = useState(1);
   const [tokenOneAmount, setTokenOneAmount] = useState(null);
   const [tokenTwoAmount, setTokenTwoAmount] = useState(null);
   const [tokenOne, setTokenOne] = useState(tokenList[0]);
   const [tokenTwo, setTokenTwo] = useState(tokenList[1]);
   const [isOpen, setIsOpen] = useState(false);
   const [changeToken, setChangeToken] = useState(1);
+  const [isQuoteLoading, setIsQuoteLoading] = useState(false);
+  const [isSwapLoading, setIsSwapLoading] = useState(false);
+  const [txDetails, setTxDetails] = useState({
+    to: null,
+    data: null,
+    value: null,
+  });
 
+  const { data, sendTransaction } = useSendTransaction();
   function changeAmount(e) {
     setTokenOneAmount(e.target.value);
   }
@@ -49,6 +59,7 @@ function Swap(props) {
 
   async function fetchPrices() {
     const parseAmount = Number(tokenOneAmount * 10 ** tokenOne.decimals);
+    setIsQuoteLoading(true);
 
     try {
       const apiUrl = `https://api-dzap.1inch.io/v5.2/137/quote?src=${tokenOne.address}&dst=${tokenTwo.address}&amount=${parseAmount}`;
@@ -66,8 +77,52 @@ function Swap(props) {
       } else {
         console.error("Error fetching prices:", response.status);
       }
+      setIsQuoteLoading(false);
     } catch (error) {
+      setIsQuoteLoading(false);
       console.error("Error fetching prices:", error);
+    }
+  }
+
+  async function fetchSwap() {
+    const parseAmount = Math.abs(
+      Math.floor(tokenOneAmount * 10 ** tokenOne.decimals)
+    ).toString();
+
+    setIsSwapLoading(true);
+
+    const allowance = await axios.get(
+      `https://api-dzap.1inch.io/v5.2/137/approve/allowance?tokenAddress=${tokenOne.address}&walletAddress=${address}`
+    );
+
+    if (allowance.data.allowance === "0") {
+      const approve = await axios.get(
+        `https://api-dzap.1inch.io/v5.2/137/approve/transaction?tokenAddress=${tokenOne.address}&amount=${parseAmount}`
+      );
+
+      console.log("not approved");
+    }
+
+    const tx = await axios.get(
+      `https://api-dzap.1inch.io/v5.2/137/swap?src=${tokenOne.address}&dst=${tokenTwo.address}&amount=${parseAmount}&from=${address}&slippage=${slippage}`
+    );
+
+    let decimals = Number(`1E${tokenTwo.decimals}`);
+    setTokenTwoAmount((Number(tx.data.toTokenAmount) / decimals).toFixed(2));
+    setTxDetails(tx.data.tx);
+
+    try {
+      let txData = tx.data.tx;
+      sendTransaction({
+        from: address,
+        to: String(txData.to),
+        data: String(txData.data),
+        value: String(txData.value),
+      });
+      setIsSwapLoading(false);
+    } catch (err) {
+      setIsSwapLoading(false);
+      console.log("Tx wagmi error!");
     }
   }
 
@@ -142,14 +197,22 @@ function Swap(props) {
           </div>
         </div>
         <div className="gasSection">
-          Estimated gas fee <SwapOutlined />
+          Estimated gas fee <SwapOutlined />{" "}
+          {txDetails.gasPrice ? txDetails.gasPrice : undefined}
         </div>
         <div
           className="quoteButton"
           disabled={!tokenOneAmount || !isConnected}
-          onClick={() => fetchPrices()}
+          onClick={() => !isQuoteLoading && fetchPrices()}
         >
-          Get Quote
+          {isQuoteLoading ? <Spin /> : <>Get Quote</>}
+        </div>
+        <div
+          className="swapButton"
+          disabled={!tokenOneAmount || !isConnected}
+          onClick={() => !isSwapLoading && fetchSwap()}
+        >
+          {isSwapLoading ? <Spin /> : <>Swap</>}
         </div>
         <div className="connectButtonDown" onClick={connect}>
           {isConnected ? (
